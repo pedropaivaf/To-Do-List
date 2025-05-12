@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Você pode adicionar variáveis ou fontes aqui, mas evite sobrepor estilos globais que conflitam com Tailwind */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: white;
+  color: black;
+  @apply bg-white text-black dark:bg-gray-900 dark:text-white;
+}
+
+a {
+  @apply text-blue-500 hover:underline;
+}
