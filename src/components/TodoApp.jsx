@@ -50,7 +50,12 @@ export default function TodoApp() {
 
     return (
         <div className="min-h-screen px-4 py-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
-            <div className="max-w-md mx-auto p-6 rounded-xl shadow-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-transparent">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="max-w-md mx-auto p-6 rounded-xl shadow-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-transparent"
+            >
                 <div className="flex justify-end mb-2">
                     <button
                         onClick={() => setDarkMode(!darkMode)}
@@ -59,7 +64,9 @@ export default function TodoApp() {
                         {darkMode ? "☀️ Modo Claro" : "🌙 Modo Escuro"}
                     </button>
                 </div>
+
                 <h1 className="text-2xl font-bold mb-4 text-center">To Do List</h1>
+
                 <div className="flex mb-4">
                     <input
                         type="text"
@@ -68,22 +75,27 @@ export default function TodoApp() {
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                     />
-                    <button
-                        className="bg-green-500 px-4 py-2 rounded-r hover:bg-green-600"
+
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-green-500 px-4 py-2 rounded-r hover:bg-green-600 transition"
                         onClick={addTask}
                     >
                         Adicionar
-                    </button>
-                    <h3 className="absolute bottom-2 left-3 text-black dark:text-white text-sm opacity-70">
-                        @ Pedro Paiva 2025
-                    </h3>
+                    </motion.button>
                 </div>
+
+                <h3 className="absolute bottom-2 left-3 text-black dark:text-white text-sm opacity-70">
+                    @ Pedro Paiva 2025
+                </h3>
+
                 <ul className="space-y-2">
                     <AnimatePresence>
                         {tasks.map((task, index) => (
                             <motion.li
                                 key={task.text + index}
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
@@ -120,7 +132,7 @@ export default function TodoApp() {
                         ))}
                     </AnimatePresence>
                 </ul>
-            </div>
+            </motion.div>
         </div>
     );
 }
