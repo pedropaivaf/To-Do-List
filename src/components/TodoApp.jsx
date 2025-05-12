@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function TodoApp() {
     const [darkMode, setDarkMode] = useState(() => {
@@ -78,41 +79,46 @@ export default function TodoApp() {
                     </h3>
                 </div>
                 <ul className="space-y-2">
-                    {tasks.map((task, index) => (
-                        <li
-                            key={index}
-                            className="flex items-center justify-between bg-gray-200 dark:bg-gray-700 p-3 rounded-lg shadow-sm"
-                        >
-                            <span
-                                className={`flex-1 text-sm ${task.done ? "line-through text-gray-400" : "text-gray-900 dark:text-white"
-                                    }`}
-                                onClick={() => toggleTask(index)}
+                    <AnimatePresence>
+                        {tasks.map((task, index) => (
+                            <motion.li
+                                key={task.text + index}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2 }}
+                                className="flex items-center justify-between bg-gray-200 dark:bg-gray-700 p-3 rounded-lg shadow-sm"
                             >
-                                {task.text}
-                            </span>
-
-                            <div className="flex gap-2 ml-4">
-                                <button
-                                    className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded transition"
-                                    onClick={() => {
-                                        const newText = prompt("Editar tarefa:", task.text);
-                                        if (newText !== null && newText.trim() !== "") {
-                                            editTask(index, newText.trim());
-                                        }
-                                    }}
+                                <span
+                                    className={`flex-1 text-sm ${task.done ? "line-through text-gray-400" : "text-gray-900 dark:text-white"}`}
+                                    onClick={() => toggleTask(index)}
                                 >
-                                    Editar
-                                </button>
+                                    {task.text}
+                                </span>
 
-                                <button
-                                    className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded transition"
-                                    onClick={() => removeTask(index)}
-                                >
-                                    Remover
-                                </button>
-                            </div>
-                        </li>
-                    ))}
+                                <div className="flex gap-2 ml-4">
+                                    <button
+                                        className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded transition"
+                                        onClick={() => {
+                                            const newText = prompt("Editar tarefa:", task.text);
+                                            if (newText !== null && newText.trim() !== "") {
+                                                editTask(index, newText.trim());
+                                            }
+                                        }}
+                                    >
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded transition"
+                                        onClick={() => removeTask(index)}
+                                    >
+                                        Remover
+                                    </button>
+                                </div>
+                            </motion.li>
+                        ))}
+                    </AnimatePresence>
                 </ul>
             </div>
         </div>
