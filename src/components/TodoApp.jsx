@@ -48,6 +48,10 @@ export default function TodoApp() {
         setTasks(newTasks);
     }
 
+    function clearTasks() {
+        setTasks([]);
+    }
+
     return (
         <div className="min-h-screen px-4 py-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
             <motion.div
@@ -132,6 +136,14 @@ export default function TodoApp() {
                         ))}
                     </AnimatePresence>
                 </ul>
+                <div className="flex justify-center mt-4">
+                    <button
+                        onClick={clearTasks}
+                        className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded transition"
+                    >
+                        Limpar todas as tarefas
+                    </button>
+                </div>
             </motion.div>
         </div>
     );
