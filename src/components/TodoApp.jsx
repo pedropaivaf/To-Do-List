@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Check } from "lucide-react";
 
 export default function TodoApp() {
     const [darkMode, setDarkMode] = useState(() => {
@@ -111,6 +112,12 @@ export default function TodoApp() {
                                 >
                                     {task.text}
                                 </span>
+                                <button
+                                    className="bg-dark-500 hover:bg-gray-600 text-white text-sm px-3 py-1 rounded transition"
+                                    onClick={() => removeTask(index)}
+                                >
+                                    <Check className="w-5 h-5 text-green-500" />
+                                </button>
 
                                 <div className="flex gap-2 ml-4">
                                     <button
@@ -123,13 +130,6 @@ export default function TodoApp() {
                                         }}
                                     >
                                         Editar
-                                    </button>
-
-                                    <button
-                                        className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded transition"
-                                        onClick={() => removeTask(index)}
-                                    >
-                                        Remover
                                     </button>
                                 </div>
                             </motion.li>
