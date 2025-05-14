@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check } from "lucide-react";
+import CalendarCard from "./CalendarCard";
 
 export default function TodoApp() {
     const [darkMode, setDarkMode] = useState(() => {
@@ -22,6 +23,18 @@ export default function TodoApp() {
         return saved ? JSON.parse(saved) : [];
     });
     const [input, setInput] = useState("");
+    const [futureTasks, setFutureTasks] = useState([]);
+
+    useEffect(() => {
+        const savedFuture = localStorage.getItem("futureTasks");
+        if (savedFuture) {
+            setFutureTasks(JSON.parse(savedFuture));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("futureTasks", JSON.stringify(futureTasks));
+    }, [futureTasks]);
 
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -33,24 +46,42 @@ export default function TodoApp() {
         setInput("");
     }
 
+    function addFutureTask(task) {
+        setFutureTasks([...futureTasks, { ...task, done: false }]);
+    }
+
     function toggleTask(index) {
         const newTasks = [...tasks];
         newTasks[index].done = !newTasks[index].done;
         setTasks(newTasks);
     }
 
+    function toggleFutureTask(index) {
+        const updated = [...futureTasks];
+        updated[index].done = !updated[index].done;
+        setFutureTasks(updated);
+    }
+
     function removeTask(index) {
         setTasks(tasks.filter((_, i) => i !== index));
+    }
+
+    function removeFutureTask(index) {
+        setFutureTasks(futureTasks.filter((_, i) => i !== index));
+    }
+
+    function clearTasks() {
+        setTasks([]);
+    }
+
+    function clearFutureTasks() {
+        setFutureTasks([]);
     }
 
     function editTask(index, newText) {
         const newTasks = [...tasks];
         newTasks[index].text = newText;
         setTasks(newTasks);
-    }
-
-    function clearTasks() {
-        setTasks([]);
     }
 
     return (
@@ -91,7 +122,7 @@ export default function TodoApp() {
                     </motion.button>
                 </div>
 
-                <h3 className="absolute bottom-2 left-3 text-black dark:text-white text-sm opacity-70">
+                <h3 className="fixed bottom-2 left-3 text-black dark:text-white text-sm opacity-70 z-50">
                     @ Pedro Paiva 2025
                 </h3>
 
@@ -136,6 +167,7 @@ export default function TodoApp() {
                         ))}
                     </AnimatePresence>
                 </ul>
+
                 <div className="flex justify-center mt-4">
                     <button
                         onClick={clearTasks}
@@ -144,6 +176,43 @@ export default function TodoApp() {
                         Limpar todas as tarefas
                     </button>
                 </div>
+
+                <CalendarCard addFutureTask={addFutureTask} />
+
+                {futureTasks.length > 0 && (
+                    <div className="mt-6 bg-gray-100 dark:bg-gray-700 p-4 rounded-xl">
+                        <div className="flex justify-between items-center mb-3">
+                            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Tarefas Futuras</h2>
+                            <button
+                                onClick={clearFutureTasks}
+                                className="text-sm text-red-500 hover:underline"
+                            >
+                                Limpar todas
+                            </button>
+                        </div>
+                        <ul className="space-y-2">
+                            {futureTasks.map((task, index) => (
+                                <li key={index} className="flex justify-between items-center p-2 bg-gray-900 rounded shadow text-white">
+                                    <span
+                                        className={`flex-1 cursor-pointer ${task.done ? "line-through text-gray-400" : ""}`}
+                                        onClick={() => toggleFutureTask(index)}
+                                    >
+                                        {task.text}
+                                    </span>
+                                    <span className="text-sm text-gray-400 mr-4">
+                                        {new Date(task.date).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
+                                    </span>
+                                    <button
+                                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs"
+                                        onClick={() => removeFutureTask(index)}
+                                    >
+                                        Remover
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </motion.div>
         </div>
     );
