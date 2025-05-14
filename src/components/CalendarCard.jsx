@@ -15,13 +15,13 @@ const CalendarCard = ({ addFutureTask }) => {
     };
 
     return (
-        <div className="bg-gray-800 p-4 rounded-xl mt-4 text-white">
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl mt-4 text-black dark:text-white">
             <h2 className="text-lg font-bold mb-4">Adicionar tarefa futura</h2>
 
             <div className="flex gap-2 mb-4">
                 <input
                     type="text"
-                    className="flex-1 p-2 rounded bg-gray-700 text-white"
+                    className="w-full mb-2 p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                     placeholder="Descrição da tarefa..."
                     value={taskText}
                     onChange={(e) => setTaskText(e.target.value)}

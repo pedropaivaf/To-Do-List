@@ -182,7 +182,7 @@ export default function TodoApp() {
                 <CalendarCard addFutureTask={addFutureTask} />
 
                 {futureTasks.length > 0 && (
-                    <div className="mt-6 bg-gray-100 dark:bg-gray-700 p-4 rounded-xl">
+                    <div className="mt-6 bg-white dark:bg-gray-700 p-4 rounded-xl text-black dark:text-white">
                         <div className="flex justify-between items-center mb-3">
                             <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Tarefas Futuras</h2>
                             <button
@@ -194,7 +194,7 @@ export default function TodoApp() {
                         </div>
                         <ul className="space-y-2">
                             {futureTasks.map((task, index) => (
-                                <li key={index} className="flex justify-between items-center p-2 bg-gray-900 rounded shadow text-white">
+                                <li key={index} className="flex justify-between items-center p-2 bg-white dark:bg-gray-900 rounded shadow text-black dark:text-white">
                                     <span
                                         className={`flex-1 cursor-pointer ${task.done ? "line-through text-gray-400" : ""}`}
                                         onClick={() => toggleFutureTask(index)}
