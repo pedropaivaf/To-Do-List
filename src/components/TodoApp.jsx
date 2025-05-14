@@ -23,14 +23,10 @@ export default function TodoApp() {
         return saved ? JSON.parse(saved) : [];
     });
     const [input, setInput] = useState("");
-    const [futureTasks, setFutureTasks] = useState([]);
-
-    useEffect(() => {
-        const savedFuture = localStorage.getItem("futureTasks");
-        if (savedFuture) {
-            setFutureTasks(JSON.parse(savedFuture));
-        }
-    }, []);
+    const [futureTasks, setFutureTasks] = useState(() => {
+        const saved = localStorage.getItem("futureTasks");
+        return saved ? JSON.parse(saved) : [];
+    });
 
     useEffect(() => {
         localStorage.setItem("futureTasks", JSON.stringify(futureTasks));
@@ -82,6 +78,12 @@ export default function TodoApp() {
         const newTasks = [...tasks];
         newTasks[index].text = newText;
         setTasks(newTasks);
+    }
+
+    function editFutureTask(index, newText) {
+        const updated = [...futureTasks];
+        updated[index].text = newText;
+        setFutureTasks(updated);
     }
 
     return (
@@ -199,15 +201,36 @@ export default function TodoApp() {
                                     >
                                         {task.text}
                                     </span>
-                                    <span className="text-sm text-gray-400 mr-4">
-                                        {new Date(task.date).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
-                                    </span>
-                                    <button
-                                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs"
-                                        onClick={() => removeFutureTask(index)}
-                                    >
-                                        Remover
-                                    </button>
+
+                                    <div className="text-right text-sm text-gray-400 mr-4">
+                                        <div>
+                                            {new Date(task.date).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
+                                        </div>
+                                        {new Date(task.date) < new Date() && !task.done && (
+                                            <div className="text-red-400">⚠️ Vencida</div>
+                                        )}
+                                    </div>
+
+                                    <div className="flex gap-2">
+                                        <button
+                                            className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs"
+                                            onClick={() => {
+                                                const newText = prompt("Editar tarefa:", task.text);
+                                                if (newText !== null && newText.trim() !== "") {
+                                                    editFutureTask(index, newText.trim());
+                                                }
+                                            }}
+                                        >
+                                            Editar
+                                        </button>
+
+                                        <button
+                                            className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs"
+                                            onClick={() => removeFutureTask(index)}
+                                        >
+                                            Remover
+                                        </button>
+                                    </div>
                                 </li>
                             ))}
                         </ul>
