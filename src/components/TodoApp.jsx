@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import { Check } from "lucide-react";
 import CalendarCard from "./CalendarCard";
 
@@ -87,17 +87,17 @@ export default function TodoApp() {
     }
 
     return (
-        <div className="min-h-screen px-4 py-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
-            <motion.div
+        <div className="min-h-screen px-4 py-6 bg-white text-black dark:bg-black dark:text-white">
+            <Motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="max-w-md mx-auto p-6 rounded-xl shadow-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-transparent"
+                className="max-w-md mx-auto p-6 rounded-xl shadow-lg bg-white dark:bg-black border-2 border-neon-blue"
             >
                 <div className="flex justify-end mb-2">
                     <button
                         onClick={() => setDarkMode(!darkMode)}
-                        className="text-sm px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+                        className="text-sm px-3 py-1 rounded bg-neon-blue text-black"
                     >
                         {darkMode ? "☀️ Modo Claro" : "🌙 Modo Escuro"}
                     </button>
@@ -108,20 +108,20 @@ export default function TodoApp() {
                 <div className="flex mb-4">
                     <input
                         type="text"
-                        className="flex-1 p-2 rounded-l bg-gray-100 dark:bg-gray-700 text-black dark:text-white focus:outline-none"
+                        className="flex-1 p-2 rounded-l bg-white dark:bg-black text-black dark:text-white border border-neon-blue focus:outline-none"
                         placeholder="Nova tarefa..."
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                     />
 
-                    <motion.button
+                    <Motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-green-500 px-4 py-2 rounded-r hover:bg-green-600 transition"
+                        className="bg-neon-blue text-black px-4 py-2 rounded-r hover:bg-neon-blue/80 transition"
                         onClick={addTask}
                     >
                         Adicionar
-                    </motion.button>
+                    </Motion.button>
                 </div>
 
                 <h3 className="fixed bottom-2 left-3 text-black dark:text-white text-sm opacity-70 z-50">
@@ -131,30 +131,30 @@ export default function TodoApp() {
                 <ul className="space-y-2">
                     <AnimatePresence>
                         {tasks.map((task, index) => (
-                            <motion.li
+                            <Motion.li
                                 key={task.text + index}
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="flex items-center justify-between bg-gray-200 dark:bg-gray-700 p-3 rounded-lg shadow-sm"
+                                className="flex items-center justify-between bg-black text-white p-3 rounded-lg border border-neon-blue"
                             >
                                 <span
-                                    className={`flex-1 text-sm ${task.done ? "line-through text-gray-400" : "text-gray-900 dark:text-white"}`}
+                                    className={`flex-1 text-sm ${task.done ? "line-through text-neon-yellow" : ""}`}
                                     onClick={() => toggleTask(index)}
                                 >
                                     {task.text}
                                 </span>
                                 <button
-                                    className="bg-dark-500 hover:bg-gray-600 text-white text-sm px-3 py-1 rounded transition"
+                                    className="bg-neon-yellow text-black text-sm px-3 py-1 rounded transition"
                                     onClick={() => removeTask(index)}
                                 >
-                                    <Check className="w-5 h-5 text-green-500" />
+                                    <Check className="w-5 h-5" />
                                 </button>
 
                                 <div className="flex gap-2 ml-4">
                                     <button
-                                        className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded transition"
+                                        className="bg-neon-blue text-black text-sm px-3 py-1 rounded transition"
                                         onClick={() => {
                                             const newText = prompt("Editar tarefa:", task.text);
                                             if (newText !== null && newText.trim() !== "") {
@@ -165,7 +165,7 @@ export default function TodoApp() {
                                         Editar
                                     </button>
                                 </div>
-                            </motion.li>
+                            </Motion.li>
                         ))}
                     </AnimatePresence>
                 </ul>
@@ -173,7 +173,7 @@ export default function TodoApp() {
                 <div className="flex justify-center mt-4">
                     <button
                         onClick={clearTasks}
-                        className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded transition"
+                        className="bg-neon-yellow text-black text-sm px-4 py-2 rounded transition"
                     >
                         Limpar todas as tarefas
                     </button>
@@ -182,38 +182,38 @@ export default function TodoApp() {
                 <CalendarCard addFutureTask={addFutureTask} />
 
                 {futureTasks.length > 0 && (
-                    <div className="mt-6 bg-white dark:bg-gray-700 p-4 rounded-xl text-black dark:text-white">
+                    <div className="mt-6 bg-white dark:bg-black p-4 rounded-xl text-black dark:text-white border border-neon-blue">
                         <div className="flex justify-between items-center mb-3">
-                            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Tarefas Futuras</h2>
+                            <h2 className="text-lg font-semibold text-black dark:text-white">Tarefas Futuras</h2>
                             <button
                                 onClick={clearFutureTasks}
-                                className="text-sm text-red-500 hover:underline"
+                                className="text-sm text-neon-yellow hover:underline"
                             >
                                 Limpar todas
                             </button>
                         </div>
                         <ul className="space-y-2">
                             {futureTasks.map((task, index) => (
-                                <li key={index} className="flex justify-between items-center p-2 bg-white dark:bg-gray-900 rounded shadow text-black dark:text-white">
+                                <li key={index} className="flex justify-between items-center p-2 bg-black text-white rounded border border-neon-blue">
                                     <span
-                                        className={`flex-1 cursor-pointer ${task.done ? "line-through text-gray-400" : ""}`}
+                                        className={`flex-1 cursor-pointer ${task.done ? "line-through text-neon-yellow" : ""}`}
                                         onClick={() => toggleFutureTask(index)}
                                     >
                                         {task.text}
                                     </span>
 
-                                    <div className="text-right text-sm text-gray-400 mr-4">
+                                    <div className="text-right text-sm text-neon-yellow mr-4">
                                         <div>
                                             {new Date(task.date).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
                                         </div>
                                         {new Date(task.date) < new Date() && !task.done && (
-                                            <div className="text-red-400">⚠️ Vencida</div>
+                                            <div className="text-neon-yellow">⚠️ Vencida</div>
                                         )}
                                     </div>
 
                                     <div className="flex gap-2">
                                         <button
-                                            className="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs"
+                                            className="bg-neon-blue text-black px-2 py-1 rounded text-xs"
                                             onClick={() => {
                                                 const newText = prompt("Editar tarefa:", task.text);
                                                 if (newText !== null && newText.trim() !== "") {
@@ -225,7 +225,7 @@ export default function TodoApp() {
                                         </button>
 
                                         <button
-                                            className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs"
+                                            className="bg-neon-yellow text-black px-2 py-1 rounded text-xs"
                                             onClick={() => removeFutureTask(index)}
                                         >
                                             Remover
@@ -236,7 +236,7 @@ export default function TodoApp() {
                         </ul>
                     </div>
                 )}
-            </motion.div>
+            </Motion.div>
         </div>
     );
 }
