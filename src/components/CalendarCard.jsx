@@ -15,13 +15,13 @@ const CalendarCard = ({ addFutureTask }) => {
     };
 
     return (
-        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl mt-4 text-black dark:text-white">
+        <div className="bg-white dark:bg-black p-4 rounded-xl mt-4 text-black dark:text-white border border-neon-blue">
             <h2 className="text-lg font-bold mb-4">Adicionar tarefa futura</h2>
 
             <div className="flex gap-2 mb-4">
                 <input
                     type="text"
-                    className="w-full mb-2 p-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                    className="w-full mb-2 p-2 rounded bg-white dark:bg-black text-black dark:text-white border border-neon-blue placeholder-gray-500 dark:placeholder-gray-400"
                     placeholder="Descrição da tarefa..."
                     value={taskText}
                     onChange={(e) => setTaskText(e.target.value)}
@@ -32,7 +32,7 @@ const CalendarCard = ({ addFutureTask }) => {
                     onChange={(date) => setSelectedDate(date)}
                     customInput={
                         <button
-                            className="bg-white p-2 rounded-full hover:scale-105 transition flex items-center justify-center"
+                            className="bg-neon-yellow p-2 rounded-full hover:scale-105 transition flex items-center justify-center text-black"
                             title="Selecionar data e hora"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-800" fill="none"
@@ -52,7 +52,7 @@ const CalendarCard = ({ addFutureTask }) => {
 
             <button
                 onClick={handleAddTask}
-                className="bg-green-500 hover:bg-green-600 w-full p-2 rounded"
+                className="bg-neon-blue text-black hover:bg-neon-blue/80 w-full p-2 rounded"
             >
                 Adicionar tarefa com data
             </button>

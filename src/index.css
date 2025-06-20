@@ -12,9 +12,9 @@ body {
   min-height: 100vh;
   background-color: white;
   color: black;
-  @apply bg-white text-black dark:bg-gray-900 dark:text-white;
+  @apply bg-white text-black dark:bg-black dark:text-white;
 }
 
 a {
-  @apply text-blue-500 hover:underline;
+  @apply text-neon-blue hover:underline;
 }
